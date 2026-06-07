@@ -32,7 +32,9 @@ function LinksEditor() {
   const d = S.get();
   const toast = useToast();
   const [f, setF] = uS({ ...(d.links || {}) });
+  const [c, setC] = uS({ ...(d.contact || {}) });
   const set = (k, v) => setF((s) => ({ ...s, [k]: v }));
+  const setC2 = (k, v) => setC((s) => ({ ...s, [k]: v }));
   const fields = [
     ["phone", "Telefon (görünen)", "0505 799 15 30"],
     ["phoneHref", "Telefon (arama no, +90…)", "+905057991530"],
@@ -60,6 +62,17 @@ function LinksEditor() {
         ))}
       </div>
       <button className="abtn abtn--gold" onClick={() => { S.updateLinks(f); toast("Bağlantılar kaydedildi"); }}>Değişiklikleri kaydet</button>
+
+      <div className="panel-box" style={{ margin: "28px 0 20px" }}>
+        <div className="panel-h"><h3>İletişim sayfası metinleri</h3><span className="adm-sub">"Bize ulaşın" bölümü</span></div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="afield"><span className="afield-l">Sayfa başlığı</span><input className="ainput" value={c.pageTitle || ""} onChange={(e) => setC2("pageTitle", e.target.value)} placeholder="Randevu Al" /></div>
+          <div className="afield"><span className="afield-l">Bölüm başlığı</span><input className="ainput" value={c.heading || ""} onChange={(e) => setC2("heading", e.target.value)} placeholder="Bize ulaşın" /></div>
+        </div>
+        <div className="afield"><span className="afield-l">Sayfa açıklaması (üst)</span><textarea className="atext" value={c.pageSub || ""} onChange={(e) => setC2("pageSub", e.target.value)} style={{ minHeight: 60 }} /></div>
+        <div className="afield"><span className="afield-l">Bölüm açıklaması</span><textarea className="atext" value={c.intro || ""} onChange={(e) => setC2("intro", e.target.value)} style={{ minHeight: 60 }} /></div>
+        <button className="abtn abtn--gold" onClick={() => { S.updateContact(c); toast("İletişim metinleri kaydedildi"); }}>İletişim metinlerini kaydet</button>
+      </div>
     </div>
   );
 }
@@ -279,7 +292,7 @@ function UserModal({ u, onClose, onSave }) {
 function buildDataJs() {
   const s = S.get();
   const out = {};
-  ["doctor", "stats", "categories", "featured", "services", "blog", "testimonials", "faq", "gallery", "hero", "seo", "links", "nav", "theme", "sections", "users"]
+  ["doctor", "stats", "categories", "featured", "services", "blog", "testimonials", "faq", "gallery", "hero", "seo", "links", "nav", "theme", "sections", "users", "contact"]
     .forEach((k) => { out[k] = s[k]; });
   return "/* Op. Dr. Gökay Baykara — içerik dosyası\n   Bu dosya admin panelindeki \"Yayınla\" ile üretildi. " + new Date().toLocaleString("tr-TR") + "\n   Yayına almak için GitHub deposundaki data.js ile değiştirin. */\nwindow.DATA = " + JSON.stringify(out, null, 2) + ";\n";
 }

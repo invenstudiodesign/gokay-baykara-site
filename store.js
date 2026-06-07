@@ -9,7 +9,7 @@
     "services", "blog", "testimonials", "faq",
     "gallery", "media", "appointments",
     "hero", "seo",
-    "links", "nav", "theme", "sections", "users"
+    "links", "nav", "theme", "sections", "users", "contact"
   ];
 
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
@@ -34,7 +34,8 @@
       nav: d.nav,
       theme: d.theme,
       sections: d.sections,
-      users: d.users
+      users: d.users,
+      contact: d.contact
     };
   }
 
@@ -194,6 +195,7 @@
 
     /* ----- LİNKLER ----- */
     updateLinks(patch) { state.links = { ...state.links, ...patch }; commit(); },
+    updateContact(patch) { state.contact = { ...state.contact, ...patch }; commit(); },
 
     /* ----- MENÜ (nav) ----- */
     updateNav(nav) { state.nav = nav; commit(); },

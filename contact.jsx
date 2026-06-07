@@ -155,6 +155,7 @@ function BookingWizard({ preselect }) {
 
 function Contact({ preselect }) {
   useReveal("contact");
+  const C = (window.DATA && window.DATA.contact) || {};
   const info = [
     ["Telefon", lk("phone"), "tel:" + lk("phoneHref")],
     ["E-posta", lk("email"), "mailto:" + lk("email")],
@@ -163,15 +164,15 @@ function Contact({ preselect }) {
   ];
   return (
     <main className="page-fade">
-      <PageHero eyebrow="İletişim" title="Randevu Al"
-        sub="Birkaç adımda randevu talebinizi oluşturun; sizi arayarak uygun zamanı birlikte netleştirelim."
+      <PageHero eyebrow="İletişim" title={C.pageTitle || "Randevu Al"}
+        sub={C.pageSub || "Birkaç adımda randevu talebinizi oluşturun; sizi arayarak uygun zamanı birlikte netleştirelim."}
         crumbs={[{ label: "İletişim" }]} />
       <section className="section" style={{ paddingTop: "clamp(20px,3vw,40px)" }}>
         <div className="wrap contact-grid">
           <div className="contact-aside reveal">
-            <h3 style={{ fontFamily: "var(--serif)", fontSize: 30, fontWeight: 400 }}>Bize ulaşın</h3>
+            <h3 style={{ fontFamily: "var(--serif)", fontSize: 30, fontWeight: 400 }}>{C.heading || "Bize ulaşın"}</h3>
             <p className="muted" style={{ marginTop: 12, marginBottom: 28 }}>
-              Herhangi bir estetik, plastik ve rekonstrüktif işlem hakkında bilgi almak için çekinmeden iletişime geçin.
+              {C.intro || "Herhangi bir estetik, plastik ve rekonstrüktif işlem hakkında bilgi almak için çekinmeden iletişime geçin."}
             </p>
             <ul className="contact-list">
               {info.map(([l, v, href]) => (
